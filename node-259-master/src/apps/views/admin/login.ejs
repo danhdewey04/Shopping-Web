@@ -1,0 +1,50 @@
+<%- include("./layout/head")%>
+<body>
+
+	<div class="row">
+		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+			<div class="login-panel panel panel-default">
+				<div class="panel-heading">Vietpro Mobile Shop - Administrator</div>
+				<div class="panel-body">
+					<% if(error){%>
+						<div class="alert alert-danger">
+							<%=error%>
+						</div>
+						<% }%>
+
+							<form role="form" method="post">
+								<fieldset>
+									<div class="form-group">
+										<input class="form-control" placeholder="E-mail" name="email" type="email" value="<%= email %>"
+											autofocus>
+									</div>
+									<div class="form-group">
+										<input class="form-control" placeholder="Mật khẩu" name="password"
+											type="password" value="<%= password %>">
+									</div>
+									<div class="checkbox">
+										<label>
+											<input name="remember" type="checkbox" value="Remember Me">Nhớ tài khoản
+										</label>
+									</div>
+									<button type="submit" class="btn btn-primary">Đăng nhập</button>
+								</fieldset>
+								<br>
+								<div class="social-login">
+								    <a href="/auth/google">
+	        								<img src="/static/upload/google-login.png" alt="Đăng nhập với Google" 
+											style="width:30px;height:30px;border-radius:50%;">
+    								</a>
+									
+    								<a href="/auth/facebook">
+	        								<img src="/static/upload/facebook-login.png" alt="Đăng nhập với Facebook"
+											style="width:35px;height:35px;border-radius:50%;">
+    								</a>
+									
+								</div>
+							</form>
+				</div>
+			</div>
+		</div><!-- /.col-->
+	</div><!-- /.row -->
+<%- include("./layout/footer")%>

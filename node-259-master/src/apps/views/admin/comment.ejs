@@ -1,0 +1,114 @@
+<%- include("./layout/head")%>
+    <%- include("./layout/header")%>
+        <%- include("./layout/sidebar")%>
+            <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+                <div class="row">
+                    <ol class="breadcrumb">
+                        <li><a href="#"><svg class="glyph stroked home">
+                                    <use xlink:href="#stroked-home"></use>
+                                </svg></a></li>
+                        <li class="active">Danh sách bình luận</li>
+                    </ol>
+                </div><!--/.row-->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">Danh sách bình luận</h1>
+                    </div>
+                </div><!--/.row-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <table data-toolbar="#toolbar" data-toggle="table">
+
+                                    <thead>
+                                        <tr>
+                                            <th data-field="id" data-sortable="true">ID</th>
+                                            <th data-field="id" data-sortable="true">Tên sản phẩm</th>
+                                            <th data-field="name" data-sortable="true">Tên người bình luận</th>
+                                            <th>Email</th>
+                                            <th>Nội dung</th>
+                                            <th>Trạng thái</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(let comment of comments){%>
+                                            <tr>
+                                                <td style="">1</td>
+                                                <td style="">
+                                                    <%=comment.prd_id.name%>
+                                                </td>
+                                                <td style="">
+                                                    <%=comment.full_name%> 
+                                                </td>
+                                                <td style="">
+                                                    <%=comment.email%> 
+                                                </td>
+                                                <td style="">
+                                                    <%=comment.body%> 
+                                                </td>
+                                                <td style="">
+                                                  <input type="checkbox" class="comment-status" data-id="<%=comment._id%>" <%= comment.status ? 'checked' : '' %> />
+                                                </td>
+                                                <td class="form-group">
+                                                    <a href="/admin/comment/delete/<%=comment._id%>"
+                                                        class="btn btn-danger"><i
+                                                            class="glyphicon glyphicon-remove"></i></a>
+                                                </td>
+                                            </tr>
+                                            <% }%>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="panel-footer">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination">
+                                        <% if(page> 1){%>
+                                            <li class="page-item"><a class="page-link"
+                                                    href="/admin/comment?page=<%=prev%>">&laquo;</a></li>
+                                            <% }%>
+                                                <% for(let pageNumber of paginate){%>
+                                                    <li class="page-item <%= pageNumber===page? 'active': ''%>"><a
+                                                            class="page-link"
+                                                            href="/admin/comment?page=<%=pageNumber%>">
+                                                            <%=pageNumber%>
+                                                        </a></li>
+                                                    <% }%>
+                                                        <% if(page < totalPages){%>
+                                                            <li class="page-item"><a class="page-link"
+                                                                    href="/admin/comment?page=<%=next%>">&raquo;</a>
+                                                            </li>
+                                                            <% }%>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.row-->
+            </div> <!--/.main-->
+
+            <script src="js/jquery-1.11.1.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="js/bootstrap-table.js"></script>
+            <script>
+$(document).ready(function() {
+  $('.comment-status').change(function() {
+    var id = $(this).data('id');
+    var status = $(this).is(':checked');
+    $.ajax({
+      url: '/admin/comment/status/' + id,
+      method: 'POST',
+      data: { status: status },
+      success: function() {
+        // Có thể reload lại bảng hoặc thông báo thành công
+      },
+      error: function() {
+        alert('Lỗi cập nhật trạng thái!');
+      }
+    });
+  });
+});
+</script>
+            <%- include("./layout/footer")%>
